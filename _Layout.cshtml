@@ -1,0 +1,324 @@
+﻿@using fashion_shop_group32.Models.Dao;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Shop quần áo nông lâm</title>
+    @*@Styles.Render("~/Content/css")*@
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Bootstrap -->
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet">
+    <!-- SmartMenus jQuery Bootstrap Addon CSS -->
+    <link href="~/Content/css/jquery.smartmenus.bootstrap.css" rel="stylesheet">
+    <!-- Product view slider -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/jquery.simpleLens.css">
+    <!-- slick slider -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/slick.css">
+    <!-- price picker slider -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/nouislider.css">
+    <!-- Theme color -->
+    <link id="switcher" href="~/Content/css/theme-color/default-theme.css" rel="stylesheet">
+    <!-- <link id="switcher" href="css/theme-color/bridge-theme.css" rel="stylesheet"> -->
+    <!-- Top Slider CSS -->
+    <link href="~/Content/css/sequence-theme.modern-slide-in.css" rel="stylesheet" media="all">
+
+    <!-- Main style sheet -->
+    <link href="~/Content/css/style.css" rel="stylesheet">
+    <link rel="stylesheet"  href="~/Content/admin/css/lib/toastr/toastr.min.css"/>
+
+</head>
+<body>
+    <!-- wpf loader Two -->
+    <div id="wpf-loader-two">
+        <div class="wpf-loader-two-inner">
+            <span>Loading</span>
+        </div>
+    </div>
+    <!-- / wpf loader Two -->
+    <!-- SCROLL TOP BUTTON -->
+    <a class="scrollToTop" href="#"><i class="fa fa-chevron-up"></i></a>
+    <!-- END SCROLL TOP BUTTON -->
+    <!-- Start header section -->
+    <header id="aa-header">
+        <!-- start header top  -->
+        <div class="aa-header-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="aa-header-top-area">
+                            <!-- start header top left -->
+                            <div class="aa-header-top-left">
+                                <div class="cellphone hidden-xs">
+                                    <p><span class="fa fa-phone"></span>0987654321</p>
+                                </div>
+                                <!-- / cellphone -->
+                            </div>
+                            <!-- / header top left -->
+                            <div class="aa-header-top-right">
+                                <ul class="aa-head-top-nav-right">
+                                    <li class="hidden-xs"><a href="/Cart">Giỏ hàng</a></li>
+                                    <li><a href="/Account" data-target="#login-modal">Đăng nhập</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / header top  -->
+        <!-- start header bottom  -->
+        <div class="aa-header-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="aa-header-bottom-area">
+                            <!-- logo  -->
+                            <div class="aa-logo">
+                                <!-- Text based logo -->
+                                <a href="/">
+                                    <span class="fa fa-shopping-cart"></span>
+                                    <p>net<strong>NLU</strong> <span>Quần áo nông lâm</span></p>
+                                </a>
+                                <!-- img based logo -->
+                                <!-- <a href="/"><img src="~/Content/img/logo.jpg" alt="logo img"></a> -->
+                            </div>
+                            <!-- / logo  -->
+                            <!-- cart box -->
+                            @{
+                                int numberItem;
+                                List<CartDao> carts = (List<CartDao>)Session["cart"];
+                                if (carts == null)
+                                {
+                                    numberItem = 0;
+                                }
+                                else
+                                {
+                                    numberItem = carts.Count();
+                                }
+                            }
+
+
+                            <div class="aa-cartbox">
+
+                                <a class="aa-cart-link" href="/Cart">
+                                    <span class="fa fa-shopping-basket"></span>
+                                    <span class="aa-cart-title">GIỎ HÀNG</span>
+                                    <span class="aa-cart-notify">@numberItem</span>
+                                </a>
+                                @if (Session["cart"] == null)
+                                {
+                                    <div class="aa-cartbox-summary">
+                                        <a class="aa-cartbox-checkout aa-primary-btn" href="/Checkout">Checkout</a>
+                                    </div>
+                                }
+                                @if (Session["cart"] != null)
+                                {
+
+                                    <div class="aa-cartbox-summary">
+
+                                        <ul>
+                                            @foreach (CartDao item in (List<CartDao>)Session["cart"])
+                                            {
+                                                <li>
+<<<<<<< HEAD
+
+                                                    <!--imgs ở đây lấy từ dưới csdl là null bởi vậy ko thêm vào được-->
+                                                    <a class="aa-cartbox-img" href="#"><img src="@item.Pro.imageMain" alt="img" width="50" height="50"></a>
+=======
+                                                    <a class="aa-cartbox-img" href="#"><img src="/@item.Pro.imgs[0]" alt="img" width="50" height="50"></a>
+>>>>>>> b84be4ac9a1c7f2a56a2329919f31b1bf5af2fb3
+                                                    <div class="aa-cartbox-info">
+                                                        <h4><a href="#">@item.Pro.ten_sp</a></h4>
+                                                        <p>@item.Pro.quantitySold x @item.Pro.gia</p>
+                                                    </div>
+                                                    <a class="aa-remove-product" href="@Url.Action( "DeleteCart", "Cart", new { product_id = item.Pro.id_sanpham }, null)"><span class="fa fa-times"></span></a>
+                                                </li>
+                                            }
+                                        </ul>
+
+                                        <a class="aa-cartbox-checkout aa-primary-btn" href="/Checkout">Checkout</a>
+                                    </div>
+
+                                }
+                            </div>
+
+                            <!-- / cart box -->
+                            <!-- search box -->
+                            <div class="aa-search-box">
+                                <form action="/Product/ProductList">
+                                    <input type="text" name="keyword" id="" placeholder="Tìm kiếm">
+                                    <button type="submit"><span class="fa fa-search"></span></button>
+                                </form>
+                            </div>
+                            <!-- / search box -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / header bottom  -->
+    </header>
+    <!-- / header section -->
+    <!-- menu -->
+    <section id="menu">
+        <div class="container">
+            <div class="menu-area">
+                <!-- Navbar -->
+                <div class="navbar navbar-default" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <!-- Left nav -->
+                        <ul class="nav navbar-nav">
+                            <li><a href="/">Trang chủ</a></li>
+                            <li>
+                                <a href="#">Nam <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+<<<<<<< HEAD
+                                    <li><a href="/Product/ProductList?cat=aokhoac&&loai=men&&gia=&&size=&&mau=">aokhoac</a></li>
+                                    <li><a href="/Product/ProductList?cat=aothun&&loai=men&&gia=&&size=&&mau=">aothun</a></li>
+                                    <li><a href="/Product/ProductList?cat=quandai&&loai=men&&gia=&&size=&&mau=">quandai</a></li>
+                                    <li><a href="/Product/ProductList?cat=quanshort&&loai=men&&gia=&&size=&&mau=">quanshort</a></li>
+                                    <li><a href="/Product/ProductList?cat=somi&&loai=men&&gia=&&size=&&mau=">somi</a></li>
+=======
+                                    <li><a href="/Product/ProductList?cat=aokhoac&&loai=men&&gia=&&size=&&mau=">Áo khoác</a></li>
+                                    <li><a href="/Product/ProductList?cat=aothun&&loai=men&&gia=&&size=&&mau=">Áo thun</a></li>
+                                    <li><a href="/Product/ProductList?cat=quandai&&loai=men&&gia=&&size=&&mau=">Quần dài</a></li>
+                                    <li><a href="/Product/ProductList?cat=quanshort&&loai=men&&gia=&&size=&&mau=">Quần short</a></li>
+                                    <li><a href="/Product/ProductList?cat=somi&&loai=men&&gia=&&size=&&mau=">Sơ mi</a></li>                      
+>>>>>>> b84be4ac9a1c7f2a56a2329919f31b1bf5af2fb3
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Nữ <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+<<<<<<< HEAD
+                                    <li><a href="/Product/ProductList?cat=aokhoac&&loai=women&&gia=&&size=&&mau=">aokhoac</a></li>
+                                    <li><a href="/Product/ProductList?cat=aothun&&loai=women&&gia=&&size=&&mau=">aothun</a></li>
+                                    <li><a href="/Product/ProductList?cat=quandai&&loai=women&&gia=&&size=&&mau=">quandai</a></li>
+                                    <li><a href="/Product/ProductList?cat=quanshort&&loai=women&&gia=&&size=&&mau=">quanshort</a></li>
+                                    <li><a href="/Product/ProductList?cat=somi&&loai=women&&gia=&&size=&&mau=">somi</a></li>
+
+=======
+                                    <li><a href="/Product/ProductList?cat=aokhoac&&loai=women&&gia=&&size=&&mau=">Áo khoác</a></li>
+                                    <li><a href="/Product/ProductList?cat=aothun&&loai=women&&gia=&&size=&&mau=">Áo thun</a></li>
+                                    <li><a href="/Product/ProductList?cat=quandai&&loai=women&&gia=&&size=&&mau=">Quần dài</a></li>
+                                    <li><a href="/Product/ProductList?cat=quanshort&&loai=women&&gia=&&size=&&mau=">Quần short</a></li>
+                                    <li><a href="/Product/ProductList?cat=somi&&loai=women&&gia=&&size=&&mau=">Sơ mi</a></li>
+                                 
+>>>>>>> b84be4ac9a1c7f2a56a2329919f31b1bf5af2fb3
+                                </ul>
+                            </li>
+                            <li><a href="/Contact">Liên hệ</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+    </section>
+    @RenderBody()
+    <footer id="aa-footer">
+        <!-- footer bottom -->
+        <div class="aa-footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="aa-footer-top-area">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="aa-footer-widget">
+                                        <h3>Group32</h3>
+                                        <ul class="aa-footer-nav">
+                                            <li><a href="/">Trang chủ</a></li>
+                                            <li><a href="/Product/ProductList?cat=aokhoac&&loai=men&&gia=&&size=&&mau=">Áo khoác</a></li>
+                                            <li><a href="/Product/ProductList?cat=aothun&&loai=men&&gia=&&size=&&mau=">Áo thun</a></li>
+                                            <li><a href="/Product/ProductList?cat=quandai&&loai=men&&gia=&&size=&&mau=">Quần dài</a></li>
+                                            <li><a href="/Product/ProductList?cat=quanshort&&loai=men&&gia=&&size=&&mau=">Quần short</a></li>
+                                            <li><a href="/Product/ProductList?cat=somi&&loai=men&&gia=&&size=&&mau=">Sơ mi</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="aa-footer-widget">
+                                        <div class="aa-footer-widget">
+                                            <h3>Contact Us</h3>
+                                            <address>
+                                                <p> Khu Phố 6 ,Phường Linh Trung , Thành Phố Thủ Đức</p>
+                                                <p><span class="fa fa-phone"></span>0987654321</p>
+                                                <p><span class="fa fa-envelope"></span>group32@gmail.com</p>
+                                            </address>
+                                            <div class="aa-footer-social">
+                                                <a href="#"><span class="fa fa-facebook"></span></a>
+                                                <a href="#"><span class="fa fa-twitter"></span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer-bottom -->
+        <div class="aa-footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="aa-footer-bottom-area">
+                            <p>Developed by <a href="#">Group 32</a></p>
+                            <div class="aa-footer-payment">
+                                <span class="fa fa-cc-mastercard"></span>
+                                <span class="fa fa-cc-visa"></span>
+                                <span class="fa fa-paypal"></span>
+                                <span class="fa fa-cc-discover"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/Scripts/js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="~/Scripts/js/bootstrap.js"></script>
+    <!-- SmartMenus jQuery plugin -->
+    <script type="text/javascript" src="~/Scripts/js/jquery.smartmenus.js"></script>
+    <!-- SmartMenus jQuery Bootstrap Addon -->
+    <script type="text/javascript" src="~/Scripts/js/jquery.smartmenus.bootstrap.js"></script>
+    <!-- To Slider JS -->
+    <script src="~/Scripts/js/sequence.js"></script>
+    <script src="~/Scripts/js/sequence-theme.modern-slide-in.js"></script>
+    <!-- Product view slider -->
+    <script type="text/javascript" src="~/Scripts/js/jquery.simpleGallery.js"></script>
+    <script type="text/javascript" src="~/Scripts/js/jquery.simpleLens.js"></script>
+    <!-- slick slider -->
+    <script type="text/javascript" src="~/Scripts/js/slick.js"></script>
+    <!-- Price picker slider -->
+    <script type="text/javascript" src="~/Scripts/js/nouislider.js"></script>
+    <!-- Custom js -->
+    <script src="~/Scripts/js/custom.js"></script>
+    <script src="~/Scripts/admin/js/lib/sweetalert/sweetalert.min.js"></script>
+    <!--add toastr js-->
+    <script src="~/Scripts/admin/js/lib/toastr/toastr.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+       if('@TempData["message"]' == "Added"){
+          toastr.success('Add Success');
+       }
+       else if ('@TempData["message"]' == "Payment") {
+            toastr.success("Payment success");
+       }
+        else { }
+    });
+    </script>
+</body>
+</html>
